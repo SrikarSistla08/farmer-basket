@@ -81,7 +81,7 @@ export default function About() {
             <div className="md:w-1/2 w-full">
               <div className="relative h-[250px] sm:h-[300px] md:h-[400px] w-full rounded-lg overflow-hidden shadow-xl">
                 <Image
-                  src="/pictures/valley.jpg"
+                  src="/pictures/Valley.jpg"
                   alt="Our Vision"
                   fill
                   className="object-cover h-full w-full"

@@ -30,7 +30,7 @@ export default function OurStory() {
         {/* Hero Content */}
         <div className="relative z-10 text-center">
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-4 sm:mb-6">
-            <TypingAnimation 
+            <TypingAnimation
               texts={["Our", "The"]}
               staticText="Story"
               speed={100}
@@ -55,7 +55,7 @@ export default function OurStory() {
             <div className="md:w-1/2 w-full">
               <div className="relative h-[300px] sm:h-[400px] w-full rounded-lg overflow-hidden shadow-xl">
                 <Image
-                  src="/pictures/valley.jpg"
+                  src="/pictures/Valley.jpg"
                   alt="Our Inspiration"
                   fill
                   className="object-cover"
