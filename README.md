@@ -1,36 +1,100 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🌱 FarmerBasket - Fresh from Farm to Table
 
-## Getting Started
+<div align="center">
+  <img src="/pictures/farm.jpg" alt="FarmerBasket Logo" width="200"/>
+  
+  [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+  [![Website](https://img.shields.io/badge/website-farmerbasket.com-green)](https://farmerbasket.com)
+</div>
 
-First, run the development server:
+## 🚀 About TheValleyCo & FarmerBasket
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+FarmerBasket, a subsidiary of TheValleyCo, is revolutionizing the way people access fresh, locally-grown produce. Our platform connects consumers directly with local farmers, ensuring the highest quality products while supporting sustainable agriculture.
+
+### 🌟 Our Vision
+
+At TheValleyCo, we envision a future where every community has access to fresh, locally-grown produce. We're building a sustainable food system that benefits both farmers and consumers, making farm-fresh produce accessible to everyone.
+
+### 💡 Core Values
+
+- **Sustainability**: Committed to eco-friendly farming practices
+- **Quality**: Rigorous quality checks for all products
+- **Community**: Building strong relationships with local farmers and consumers
+
+## 🛍️ Features
+
+- **Fresh Produce**: Direct from local farms to your table
+- **Quality Assurance**: Rigorous quality checks for all products
+- **Sustainable Practices**: Supporting eco-friendly farming
+- **Local Support**: Helping local farmers thrive
+- **Convenient Delivery**: Fast and reliable shipping
+
+## 📱 Tech Stack
+
+- **Frontend**: Next.js, React, TypeScript
+- **Styling**: Tailwind CSS
+- **Deployment**: Vercel
+- **Maps**: Google Maps API
+- **Font**: Fjalla One
+
+## 🏗️ Project Structure
+
+```
+farmer-basket/
+├── src/
+│   ├── app/
+│   │   ├── about/
+│   │   ├── shop/
+│   │   └── page.tsx
+│   ├── components/
+│   │   ├── Header.tsx
+│   │   ├── FarmersMap.tsx
+│   │   └── ProductSlideshow.tsx
+│   └── styles/
+│       └── globals.css
+└── public/
+    └── pictures/
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🚀 Getting Started
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/yourusername/farmer-basket.git
+   ```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
 
-## Learn More
+3. Create a `.env.local` file and add your environment variables:
+   ```
+   NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=your_api_key_here
+   ```
 
-To learn more about Next.js, take a look at the following resources:
+4. Run the development server:
+   ```bash
+   npm run dev
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 📞 Contact
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- **Email**: support@farmerbasket.com
+- **Phone**: (443) 636-7777
+- **Address**: 123 Farm Road, Green Valley, CA 90210
 
-## Deploy on Vercel
+## 🤝 Contributing
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+We welcome contributions! Please feel free to submit a Pull Request.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
+
+<div align="center">
+  <p>Made with ❤️ by TheValleyCo</p>
+  <p>© {new Date().getFullYear()} FarmerBasket. All rights reserved.</p>
+</div>
