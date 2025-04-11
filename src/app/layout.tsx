@@ -11,6 +11,9 @@ const fjallaOne = Fjalla_One({
 export const metadata: Metadata = {
   title: "FarmerBasket",
   description: "Fresh from the farm to your table",
+  icons: {
+    icon: "/cowboy.svg",
+  },
 };
 
 export default function RootLayout({
