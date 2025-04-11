@@ -6,15 +6,14 @@ import FarmersMap from "@/components/FarmersMap";
 import Header from "@/components/Header";
 import TypingAnimation from "@/components/TypingAnimation";
 import Footer from "@/components/Footer";
-
 // Smooth scroll utility
-const smoothScroll = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
-  e.preventDefault();
-  const element = document.getElementById(targetId);
-  if (element) {
-    element.scrollIntoView({ behavior: 'smooth' });
-  }
-};
+// const smoothScroll = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
+//   e.preventDefault();
+//   const element = document.getElementById(targetId);
+//   if (element) {
+//     element.scrollIntoView({ behavior: 'smooth' });
+//   }
+// };
 
 export default function Home() {
   return (

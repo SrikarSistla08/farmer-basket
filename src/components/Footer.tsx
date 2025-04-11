@@ -3,13 +3,13 @@
 import Link from "next/link";
 
 // Smooth scroll utility
-const smoothScroll = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
-  e.preventDefault();
-  const element = document.getElementById(targetId);
-  if (element) {
-    element.scrollIntoView({ behavior: 'smooth' });
-  }
-};
+// const smoothScroll = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
+//   e.preventDefault();
+//   const element = document.getElementById(targetId);
+//   if (element) {
+//     element.scrollIntoView({ behavior: 'smooth' });
+//   }
+// };
 
 export default function Footer() {
   return (

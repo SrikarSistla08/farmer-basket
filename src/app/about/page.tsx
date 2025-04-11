@@ -59,7 +59,7 @@ export default function About() {
                 loop={true}
               />
             </h1>
-            <p className="text-lg sm:text-xl md:text-2xl text-white mb-6 sm:mb-8">We're more than just a farm - we're a community dedicated to sustainable agriculture</p>
+            <p className="text-lg sm:text-xl md:text-2xl text-white mb-6 sm:mb-8">We&apos;re more than just a farm - we&apos;re a community dedicated to sustainable agriculture</p>
             <div className="mt-12 sm:mt-16">
               <Link
                 href="#vision"
