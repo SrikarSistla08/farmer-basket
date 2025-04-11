@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState, useEffect } from "react";
+import Image from "next/image";
 
 interface HeaderProps {
   currentPage?: string;
@@ -36,48 +37,13 @@ export default function Header({ currentPage }: HeaderProps) {
           {/* Logo */}
           <div className="flex items-center">
             <Link href="/" className="flex items-center space-x-2 text-xl font-bold text-green-600 hover:text-green-700 transition-colors">
-              <svg 
-                className="w-8 h-8" 
-                viewBox="0 0 24 24" 
-                fill="none" 
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path 
-                  d="M4 8L12 4L20 8V18C20 19.1046 19.1046 20 18 20H6C4.89543 20 4 19.1046 4 18V8Z" 
-                  stroke="currentColor" 
-                  strokeWidth="2" 
-                  strokeLinecap="round" 
-                  strokeLinejoin="round"
-                />
-                <path 
-                  d="M4 8L12 12L20 8" 
-                  stroke="currentColor" 
-                  strokeWidth="2" 
-                  strokeLinecap="round" 
-                  strokeLinejoin="round"
-                />
-                <path 
-                  d="M12 12V20" 
-                  stroke="currentColor" 
-                  strokeWidth="2" 
-                  strokeLinecap="round" 
-                  strokeLinejoin="round"
-                />
-                <path 
-                  d="M8 10V16" 
-                  stroke="currentColor" 
-                  strokeWidth="2" 
-                  strokeLinecap="round" 
-                  strokeLinejoin="round"
-                />
-                <path 
-                  d="M16 10V16" 
-                  stroke="currentColor" 
-                  strokeWidth="2" 
-                  strokeLinecap="round" 
-                  strokeLinejoin="round"
-                />
-              </svg>
+              <Image
+                src="/cowboy.svg"
+                alt="FarmerBasket Logo"
+                width={32}
+                height={32}
+                className="w-8 h-8"
+              />
               <span className="hidden sm:inline">FarmerBasket</span>
             </Link>
           </div>
@@ -104,13 +70,12 @@ export default function Header({ currentPage }: HeaderProps) {
             >
               About
             </Link>
-            <a 
-              href="#os" 
-              onClick={(e) => smoothScroll(e, 'os')}
+            <Link 
+              href="/ourstory" 
               className="text-gray-600 hover:text-green-600 font-medium transition-colors"
             >
               Our Story
-            </a>
+            </Link>
             <a 
               href="#contact" 
               onClick={(e) => smoothScroll(e, 'contact')}

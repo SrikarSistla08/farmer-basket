@@ -162,7 +162,7 @@ export default function Map() {
       <div className="mt-6 text-center">
         <p className="text-gray-600">
           Want to become a partner farmer? 
-          <a href="/contact" className="text-green-600 hover:text-green-700 ml-1">
+          <a href="/farmers" className="text-green-600 hover:text-green-700 ml-1">
             Contact us here
           </a>
         </p>
