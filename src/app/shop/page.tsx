@@ -5,6 +5,49 @@ import Link from "next/link";
 import { useState } from "react";
 import Header from "@/components/Header";
 
+// Sample farm data
+const farms = [
+  {
+    id: 1,
+    name: "Green Valley Farm",
+    location: "San Francisco, CA",
+    description: "Specializing in organic vegetables and fruits",
+    image: "/pictures/farm.jpg",
+    coverImage: "/pictures/valley.jpg",
+    logo: "/pictures/pattern.svg",
+    type: "vegetable",
+    rating: 4.8,
+    products: ["Vegetables", "Fruits"],
+    coordinates: { lat: 37.7749, lng: -122.4194 }
+  },
+  {
+    id: 2,
+    name: "Sunny Acres",
+    location: "Oakland, CA",
+    description: "Premium dairy products and eggs",
+    image: "/pictures/community.jpg",
+    coverImage: "/pictures/Valley.jpg",
+    logo: "/pictures/shop-pattern.svg",
+    type: "dairy",
+    rating: 4.6,
+    products: ["Dairy", "Eggs"],
+    coordinates: { lat: 37.7833, lng: -122.4167 }
+  },
+  {
+    id: 3,
+    name: "Mountain View Farm",
+    location: "San Jose, CA",
+    description: "Grass-fed meats and honey",
+    image: "/pictures/farm.jpg",
+    coverImage: "/pictures/valley.jpg",
+    logo: "/pictures/pattern.svg",
+    type: "meat",
+    rating: 4.9,
+    products: ["Meat", "Honey"],
+    coordinates: { lat: 37.7750, lng: -122.4184 }
+  }
+];
+
 // Sample product data - in a real app, this would come from a database
 const products = [
   {
@@ -18,7 +61,8 @@ const products = [
     reviews: 124,
     inStock: true,
     isNew: true,
-    isBestSeller: true
+    isBestSeller: true,
+    farmId: 1
   },
   {
     id: 2,
@@ -31,7 +75,8 @@ const products = [
     reviews: 89,
     inStock: true,
     isNew: false,
-    isBestSeller: true
+    isBestSeller: true,
+    farmId: 2
   },
   {
     id: 3,
@@ -44,7 +89,8 @@ const products = [
     reviews: 56,
     inStock: true,
     isNew: true,
-    isBestSeller: false
+    isBestSeller: false,
+    farmId: 3
   },
   {
     id: 4,
@@ -57,7 +103,8 @@ const products = [
     reviews: 78,
     inStock: true,
     isNew: false,
-    isBestSeller: true
+    isBestSeller: true,
+    farmId: 3
   },
   {
     id: 5,
@@ -70,7 +117,8 @@ const products = [
     reviews: 92,
     inStock: true,
     isNew: false,
-    isBestSeller: false
+    isBestSeller: false,
+    farmId: 1
   },
   {
     id: 6,
@@ -83,7 +131,8 @@ const products = [
     reviews: 67,
     inStock: true,
     isNew: false,
-    isBestSeller: false
+    isBestSeller: false,
+    farmId: 2
   }
 ];
 
@@ -100,10 +149,12 @@ export default function Shop() {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [sortBy, setSortBy] = useState('featured');
   const [priceRange, setPriceRange] = useState([0, 20]);
+  const [selectedFarm, setSelectedFarm] = useState<number | null>(null);
 
   const filteredProducts = products
     .filter(product => selectedCategory === 'all' || product.category === selectedCategory)
     .filter(product => product.price >= priceRange[0] && product.price <= priceRange[1])
+    .filter(product => !selectedFarm || product.farmId === selectedFarm)
     .sort((a, b) => {
       switch (sortBy) {
         case 'price-low':
@@ -117,6 +168,8 @@ export default function Shop() {
       }
     });
 
+  const selectedFarmData = selectedFarm ? farms.find(farm => farm.id === selectedFarm) : null;
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Navigation Bar */}
@@ -127,6 +180,113 @@ export default function Shop() {
           <h1 className="text-4xl font-bold text-gray-800 mb-4">Our Products</h1>
           <p className="text-xl text-gray-600">Fresh from our farm to your table</p>
         </header>
+
+        {/* Farm Selection */}
+        <div className="mb-8">
+          <h2 className="text-2xl font-bold text-gray-800 mb-4">Select a Farm</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+            {farms.map((farm) => (
+              <button
+                key={farm.id}
+                onClick={() => setSelectedFarm(farm.id)}
+                className={`p-4 rounded-lg text-left transition-all ${
+                  selectedFarm === farm.id
+                    ? 'bg-green-100 border-2 border-green-600'
+                    : 'bg-white hover:bg-gray-50 border border-gray-200'
+                }`}
+              >
+                <div className="flex items-center space-x-4">
+                  <div className="relative w-16 h-16 rounded-lg overflow-hidden">
+                    <Image
+                      src={farm.image}
+                      alt={farm.name}
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    />
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-gray-800">{farm.name}</h3>
+                    <p className="text-sm text-gray-600">{farm.location}</p>
+                  </div>
+                </div>
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Selected Farm Info */}
+        {selectedFarmData && (
+          <div className="mb-8 bg-white p-6 rounded-lg shadow-lg">
+            <div className="flex items-center space-x-4 mb-4">
+              <div className="relative w-20 h-20 rounded-lg overflow-hidden">
+                <Image
+                  src={selectedFarmData.logo}
+                  alt={`${selectedFarmData.name} logo`}
+                  fill
+                  className="object-contain"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                />
+              </div>
+              <div>
+                <h2 className="text-2xl font-bold text-gray-800">
+                  Viewing {selectedFarmData.name}
+                </h2>
+                <p className="text-gray-600">{selectedFarmData.location}</p>
+                <div className="flex items-center mt-1">
+                  <div className="flex items-center">
+                    {[...Array(5)].map((_, i) => (
+                      <svg
+                        key={i}
+                        className={`w-4 h-4 ${
+                          i < Math.floor(selectedFarmData.rating)
+                            ? 'text-yellow-400'
+                            : 'text-gray-300'
+                        }`}
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                      >
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                      </svg>
+                    ))}
+                  </div>
+                  <span className="text-sm text-gray-500 ml-2">
+                    {selectedFarmData.rating} rating
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div className="relative h-48 w-full rounded-lg overflow-hidden mb-4">
+              <Image
+                src={selectedFarmData.coverImage}
+                alt={`${selectedFarmData.name} cover`}
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              />
+            </div>
+            <p className="text-gray-600 mb-4">{selectedFarmData.description}</p>
+            <div className="mb-4">
+              <h3 className="font-semibold text-gray-800 mb-2">Specialties:</h3>
+              <div className="flex flex-wrap gap-2">
+                {selectedFarmData.products.map((product, index) => (
+                  <span
+                    key={index}
+                    className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm"
+                  >
+                    {product}
+                  </span>
+                ))}
+              </div>
+            </div>
+            <button
+              onClick={() => setSelectedFarm(null)}
+              className="text-green-600 hover:text-green-700 font-medium"
+            >
+              View All Farms
+            </button>
+          </div>
+        )}
 
         {/* Shop Controls */}
         <div className="mb-8 flex flex-col md:flex-row justify-between items-center gap-4">

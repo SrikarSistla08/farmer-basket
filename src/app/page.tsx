@@ -115,10 +115,10 @@ export default function Home() {
                   <strong>When you choose FarmerBasket</strong>, you&apos;re not just buying food - you&apos;re supporting local farmers, reducing food miles, and contributing to a more sustainable future for our community.
                 </p>
                 <Link
-                  href="/about"
+                  href="/ourstory"
                   className="inline-block bg-green-600 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-full font-semibold hover:bg-green-700 transition-colors text-sm sm:text-base"
                 >
-                  Learn More About TheValleyCo
+                  Read More About Our Story
                 </Link>
               </div>
             </div>

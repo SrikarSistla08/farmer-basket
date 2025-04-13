@@ -21,8 +21,14 @@ export default function TypingAnimation({
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
   const [currentTextIndex, setCurrentTextIndex] = useState(0);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    if (!texts || texts.length === 0) {
+      setError('No texts provided for animation');
+      return;
+    }
+
     if (currentIndex < texts[currentTextIndex].length && !isDeleting) {
       const timeout = setTimeout(() => {
         setDisplayedText(prev => prev + texts[currentTextIndex][currentIndex]);
@@ -53,13 +59,17 @@ export default function TypingAnimation({
     }
   }, [currentIndex, texts, currentTextIndex, speed, isDeleting, loop]);
 
+  if (error) {
+    return <div className="text-red-500">{error}</div>;
+  }
+
   return (
-    <div className="flex flex-col items-center">
-      <span className={`${className} mb-2`}>
+    <div className="flex flex-col items-center" role="status" aria-live="polite">
+      <span className={`${className} mb-2`} aria-label={displayedText}>
         {displayedText}
       </span>
       {staticText && (
-        <span className={`text-white ${staticTextClassName}`}>
+        <span className={`text-white ${staticTextClassName}`} aria-label={staticText}>
           {staticText}
         </span>
       )}

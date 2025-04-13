@@ -4,6 +4,7 @@ import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import { useEffect, useState } from 'react';
+import Image from 'next/image';
 
 // Define types for our farmer data
 interface Farmer {
@@ -83,22 +84,55 @@ const createFarmIcon = (color: string) => {
 
 export default function Map() {
   const [isClient, setIsClient] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    setIsClient(true);
-    // Fix for default marker icons in Leaflet with Next.js
-    delete (L.Icon.Default.prototype as { _getIconUrl?: string })._getIconUrl;
-    L.Icon.Default.mergeOptions({
-      iconRetinaUrl: '/images/marker-icon-2x.png',
-      iconUrl: '/images/marker-icon.png',
-      shadowUrl: '/images/marker-shadow.png',
-    });
+    try {
+      setIsClient(true);
+      // Fix for default marker icons in Leaflet with Next.js
+      delete (L.Icon.Default.prototype as { _getIconUrl?: string })._getIconUrl;
+      L.Icon.Default.mergeOptions({
+        iconRetinaUrl: '/images/marker-icon-2x.png',
+        iconUrl: '/images/marker-icon.png',
+        shadowUrl: '/images/marker-shadow.png',
+      });
+      setIsLoading(false);
+    } catch (err) {
+      setError('Failed to load map. Please try again later.');
+      setIsLoading(false);
+    }
   }, []);
 
   if (!isClient) {
     return (
       <div className="h-[500px] w-full rounded-lg overflow-hidden bg-gray-100 flex items-center justify-center">
         <p className="text-gray-500">Loading map...</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="h-[500px] w-full rounded-lg overflow-hidden bg-gray-100 flex items-center justify-center">
+        <p className="text-red-500">{error}</p>
+      </div>
+    );
+  }
+
+  if (isLoading) {
+    return (
+      <div className="h-[500px] w-full rounded-lg overflow-hidden bg-gray-100 flex items-center justify-center">
+        <div className="flex flex-col items-center">
+          <Image
+            src="/cowboy.svg"
+            alt="Loading..."
+            width={32}
+            height={32}
+            className="w-8 h-8 animate-bounce mb-2"
+          />
+          <p className="text-gray-500">Loading map...</p>
+        </div>
       </div>
     );
   }
