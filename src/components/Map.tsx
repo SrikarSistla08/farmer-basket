@@ -98,8 +98,8 @@ export default function Map() {
         shadowUrl: '/images/marker-shadow.png',
       });
       setIsLoading(false);
-    } catch (err) {
-      setError('Failed to load map. Please try again later.');
+    } catch (error) {
+      setError(`Failed to load map: ${error instanceof Error ? error.message : 'Unknown error'}`);
       setIsLoading(false);
     }
   }, []);
