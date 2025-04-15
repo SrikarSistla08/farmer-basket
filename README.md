@@ -1,10 +1,10 @@
 # 🌱 FarmerBasket - Fresh from Farm to Table
 
 <div align="center">
-  <img src="/pictures/farm.jpg" alt="FarmerBasket Logo" width="200"/>
+  <img src="public/cowboy2.png" alt="FarmerBasket Logo" width="200"/>
   
-  [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
-  [![Website](https://img.shields.io/badge/website-farmerbasket.com-green)](https://farmerbasket.com)
+  [![License](https://img.shields.io/badge/license-MIT-darkgreen.svg)](LICENSE)
+  [![Website](https://img.shields.io/badge/website-farmerbasket-darkgreen)](https://farmer-basket.vercel.app/)
 </div>
 
 ## 🚀 About TheValleyCo & FarmerBasket
@@ -80,7 +80,7 @@ farmer-basket/
 
 ## 📞 Contact
 
-- **Email**: support@farmerbasket.com
+- **Email**: srikarsistla710@gmail.com
 - **Phone**: (443) 636-7777
 - **Address**: 123 Farm Road, Green Valley, CA 90210
 
