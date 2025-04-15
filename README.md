@@ -96,5 +96,5 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 <div align="center">
   <p>Made with ❤️ by TheValleyCo</p>
-  <p>© {new Date().getFullYear()} FarmerBasket. All rights reserved.</p>
+  <p>© 2025 FarmerBasket. All rights reserved.</p>
 </div>
