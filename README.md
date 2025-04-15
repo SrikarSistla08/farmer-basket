@@ -5,37 +5,59 @@
   
   [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
   [![Website](https://img.shields.io/badge/website-farmerbasket.com-green)](https://farmerbasket.com)
+  [![Next.js](https://img.shields.io/badge/Next.js-13.4-black)](https://nextjs.org/)
+  [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue)](https://www.typescriptlang.org/)
 </div>
 
-## 🚀 About TheValleyCo & FarmerBasket
+## 🌟 About FarmerBasket
 
-FarmerBasket, a subsidiary of TheValleyCo, is revolutionizing the way people access fresh, locally-grown produce. Our platform connects consumers directly with local farmers, ensuring the highest quality products while supporting sustainable agriculture.
+FarmerBasket is revolutionizing local food systems by creating direct connections between farmers and consumers. Our platform empowers local farmers while providing communities with access to fresh, sustainably grown produce and artisanal products.
 
-### 🌟 Our Vision
+### Our Mission
 
-At TheValleyCo, we envision a future where every community has access to fresh, locally-grown produce. We're building a sustainable food system that benefits both farmers and consumers, making farm-fresh produce accessible to everyone.
+To build a sustainable, technology-driven food ecosystem that:
+- Supports local farmers and their communities
+- Ensures fair pricing and transparent practices
+- Promotes sustainable and organic farming methods
+- Makes fresh, local produce accessible to everyone
 
-### 💡 Core Values
+## 🚀 Features
 
-- **Sustainability**: Committed to eco-friendly farming practices
-- **Quality**: Rigorous quality checks for all products
-- **Community**: Building strong relationships with local farmers and consumers
+### For Consumers
+- **Fresh Local Produce**: Direct access to farm-fresh products
+- **CSA Programs**: Flexible subscription options for regular deliveries
+- **Farm Discovery**: Interactive map to find local farms
+- **Seasonal Products**: Access to seasonal specialties
+- **Transparent Sourcing**: Complete information about farms and practices
 
-## 🛍️ Features
+### For Farmers
+- **Digital Presence**: Professional online profiles
+- **Direct Sales**: Easy-to-use e-commerce platform
+- **CSA Management**: Tools for managing subscriptions
+- **Analytics**: Insights into sales and customer preferences
+- **Community Building**: Network with other local farmers
 
-- **Fresh Produce**: Direct from local farms to your table
-- **Quality Assurance**: Rigorous quality checks for all products
-- **Sustainable Practices**: Supporting eco-friendly farming
-- **Local Support**: Helping local farmers thrive
-- **Convenient Delivery**: Fast and reliable shipping
+## 💻 Tech Stack
 
-## 📱 Tech Stack
+- **Frontend**
+  - Next.js 13 (App Router)
+  - React 18
+  - TypeScript
+  - Tailwind CSS
+  - Framer Motion
 
-- **Frontend**: Next.js, React, TypeScript
-- **Styling**: Tailwind CSS
-- **Deployment**: Vercel
-- **Maps**: Google Maps API
-- **Font**: Fjalla One
+- **Development Tools**
+  - ESLint
+  - Prettier
+  - Husky
+  - Jest
+  - React Testing Library
+
+- **APIs & Services**
+  - Google Maps API
+  - Stripe Payments
+  - SendGrid Email
+  - Vercel Analytics
 
 ## 🏗️ Project Structure
 
