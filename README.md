@@ -1,12 +1,17 @@
 # 🌱 FarmerBasket - Fresh from Farm to Table
 
 <div align="center">
-  <img src="/pictures/farm.jpg" alt="FarmerBasket Logo" width="200"/>
+  <img src="public/cowboy2.png" alt="FarmerBasket Logo" width="200"/>
   
+<<<<<<< HEAD
   [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
   [![Website](https://img.shields.io/badge/website-farmerbasket.com-green)](https://farmerbasket.com)
   [![Next.js](https://img.shields.io/badge/Next.js-13.4-black)](https://nextjs.org/)
   [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue)](https://www.typescriptlang.org/)
+=======
+  [![License](https://img.shields.io/badge/license-MIT-darkgreen.svg)](LICENSE)
+  [![Website](https://img.shields.io/badge/website-farmerbasket-darkgreen)](https://farmer-basket.vercel.app/)
+>>>>>>> f74e60b8554620a72b51f498ffb2c04071df4015
 </div>
 
 ## 🌟 About FarmerBasket
@@ -102,7 +107,7 @@ farmer-basket/
 
 ## 📞 Contact
 
-- **Email**: support@farmerbasket.com
+- **Email**: srikarsistla710@gmail.com
 - **Phone**: (443) 636-7777
 - **Address**: 123 Farm Road, Green Valley, CA 90210
 
@@ -118,5 +123,5 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 <div align="center">
   <p>Made with ❤️ by TheValleyCo</p>
-  <p>© {new Date().getFullYear()} FarmerBasket. All rights reserved.</p>
+  <p>© 2025 FarmerBasket. All rights reserved.</p>
 </div>
