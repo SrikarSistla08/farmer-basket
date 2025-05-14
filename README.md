@@ -3,15 +3,15 @@
 <div align="center">
   <img src="public/cowboy2.png" alt="FarmerBasket Logo" width="200"/>
   
-<<<<<<< HEAD
+
   [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
   [![Website](https://img.shields.io/badge/website-farmerbasket.com-green)](https://farmerbasket.com)
   [![Next.js](https://img.shields.io/badge/Next.js-13.4-black)](https://nextjs.org/)
   [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue)](https://www.typescriptlang.org/)
-=======
+
   [![License](https://img.shields.io/badge/license-MIT-darkgreen.svg)](LICENSE)
   [![Website](https://img.shields.io/badge/website-farmerbasket-darkgreen)](https://farmer-basket.vercel.app/)
->>>>>>> f74e60b8554620a72b51f498ffb2c04071df4015
+
 </div>
 
 ## 🌟 About FarmerBasket
