@@ -83,14 +83,24 @@ export default function Header({ currentPage }: HeaderProps) {
             >
               Contact
             </a>
+            <Link 
+              href="http://localhost:3001/farmers"
+              className="bg-green-600 text-white px-4 py-2 rounded-md font-medium hover:bg-green-700 transition-colors"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Join as Farmer
+            </Link>
           </div>
 
           {/* Mobile menu button */}
           <div className="md:hidden flex items-center">
             <button
+              type="button"
+              aria-expanded={isMenuOpen}
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="inline-flex items-center justify-center p-2 rounded-md text-gray-600 hover:text-green-600 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-green-500"
-              aria-expanded={isMenuOpen ? "true" : "false" as const}
+              aria-label={isMenuOpen ? "Close menu" : "Open menu"}
             >
               <span className="sr-only">Open main menu</span>
               {!isMenuOpen ? (
@@ -154,8 +164,17 @@ export default function Header({ currentPage }: HeaderProps) {
           >
             Contact
           </a>
+          <Link 
+            href="http://localhost:3001/farmers"
+            className="block px-3 py-2 rounded-md text-base font-medium bg-green-600 text-white hover:bg-green-700"
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => setIsMenuOpen(false)}
+          >
+            Join as Farmer
+          </Link>
         </div>
       </div>
     </nav>
   );
-} 
+}

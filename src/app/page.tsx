@@ -133,7 +133,7 @@ export default function Home() {
             <h2 className="text-3xl sm:text-4xl font-bold text-center mb-8 sm:mb-16 text-gray-800">How We Work</h2>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8">
-              {/* Step 1: Farm Selection */}
+              {/* Step 1-4 remain unchanged */}
               <div className="bg-white p-4 sm:p-6 rounded-2xl shadow-lg text-center">
                 <div className="w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-3 sm:mb-4 bg-green-100 rounded-full flex items-center justify-center">
                   <svg className="w-8 h-8 sm:w-10 sm:h-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -175,6 +175,57 @@ export default function Home() {
                 </div>
                 <h3 className="text-lg sm:text-xl font-bold text-green-600 mb-2">Customer Satisfaction</h3>
                 <p className="text-sm sm:text-base text-gray-700">We maintain close relationships with our customers, ensuring their needs are met and feedback is valued.</p>
+              </div>
+            </div>
+
+            {/* Farmer Recruitment Call-to-Action */}
+            <div className="mt-12 bg-green-50 p-8 rounded-2xl shadow-lg border-2 border-green-200">
+              <div className="flex flex-col md:flex-row items-center gap-8">
+                <div className="md:w-2/3">
+                  <h3 className="text-2xl font-bold text-green-700 mb-4">Join Our Network of Local Farmers</h3>
+                  <div className="space-y-4">
+                    <p className="text-gray-700">Be part of our growing community of sustainable farmers. We offer:</p>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-gray-700">
+                      <div className="flex items-center space-x-2">
+                        <svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                        </svg>
+                        <span>Direct Market Access</span>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                        </svg>
+                        <span>Fair Price Guarantee</span>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                        </svg>
+                        <span>Logistics Support</span>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                        </svg>
+                        <span>Technology Platform</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="md:w-1/3 flex justify-center">
+                  <Link
+                    href="http://localhost:3001/farmers"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center bg-green-600 text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-green-700 transition-colors shadow-lg hover:shadow-xl space-x-2"
+                  >
+                    <span>Become a Partner</span>
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                    </svg>
+                  </Link>
+                </div>
               </div>
             </div>
 
