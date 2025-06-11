@@ -6,7 +6,6 @@ import TypingAnimation from "@/components/TypingAnimation";
 import FarmersMap from "@/components/FarmersMap";
 import Image from "next/image";
 import { useState, FormEvent, ChangeEvent } from 'react';
-import { useRouter } from 'next/navigation';
 
 // Smooth scroll utility
 const smoothScroll = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
@@ -30,7 +29,6 @@ interface FormData {
 }
 
 export default function Farmers() {
-  const router = useRouter();
   const [formData, setFormData] = useState<FormData>({
     farmName: "",
     contactPerson: "",

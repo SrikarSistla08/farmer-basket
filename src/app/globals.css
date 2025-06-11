@@ -29,3 +29,7 @@ body {
   color: var(--foreground);
   font-family: var(--font-fjalla), sans-serif;
 }
+
+.svg-pin {
+  filter: drop-shadow(3px 3px 2px rgba(0, 0, 0, 0.2));
+}
