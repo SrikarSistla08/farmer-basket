@@ -67,13 +67,13 @@ export default function Map() {
   const center = {
     lat: 37.7749,
     lng: -122.4194
+  };
+
   // Icon colors for different farm types
   const iconColors: Record<FarmType, string> = {
     vegetable: '#4CAF50', // Green
     dairy: '#2196F3',    // Blue
     meat: '#F44336',     // Red
-    mixed: '#FFC107'     // Yellow
-  };
     mixed: '#FFC107'     // Yellow
   };
 
@@ -168,9 +168,9 @@ export default function Map() {
           />
           {farmers.map((farmer) => (
             <Marker
+              key={farmer._id}
               icon={createFarmIcon(iconColors[farmer.type as FarmType] ?? '#888')}
               position={[farmer.location.lat, farmer.location.lng]}
-              icon={createFarmIcon(iconColors[farmer.type])}
             >
               <Popup>
                 <div className="p-2">
