@@ -215,7 +215,7 @@ export default function Home() {
                 </div>
                 <div className="md:w-1/3 flex justify-center">
                   <Link
-                    href="http://localhost:3001/farmers"
+                    href="/farmers"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center justify-center bg-green-600 text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-green-700 transition-colors shadow-lg hover:shadow-xl space-x-2"

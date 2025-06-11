@@ -5,104 +5,109 @@ import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
+import { useRouter, useParams } from "next/navigation";
 
-// Define types for our farmer data
 interface Farmer {
-  id: number;
+  _id: string;
   name: string;
-  location: {
-    lat: number;
-    lng: number;
-  };
+  location: { lat: number; lng: number };
   products: string[];
   rating: number;
+  type: string;
   image: string;
-  type: 'vegetable' | 'dairy' | 'meat' | 'mixed';
+  // add other fields as needed
 }
 
 // Sample farmer data - in a real app, this would come from your backend
-const farmers: Farmer[] = [
-  {
-    id: 1,
-    name: "Green Valley Farm",
-    location: { lat: 37.7749, lng: -122.4194 },
-    products: ["Vegetables", "Fruits"],
-    rating: 4.8,
-    image: "/pictures/farm1.jpg",
-    type: "vegetable"
-  },
-  {
-    id: 2,
-    name: "Sunny Acres",
-    location: { lat: 37.7833, lng: -122.4167 },
-    products: ["Dairy", "Eggs"],
-    rating: 4.6,
-    image: "/pictures/farm2.jpg",
-    type: "dairy"
-  },
-  {
-    id: 3,
-    name: "Mountain View Farm",
-    location: { lat: 37.7750, lng: -122.4184 },
-    products: ["Meat", "Honey"],
-    rating: 4.9,
-    image: "/pictures/farm3.jpg",
-    type: "meat"
-  }
-];
-
-const center = {
-  lat: 37.7749,
-  lng: -122.4194
-};
-
-// Icon colors for different farm types
-const iconColors = {
-  vegetable: '#4CAF50', // Green
-  dairy: '#2196F3',    // Blue
-  meat: '#F44336',     // Red
-  mixed: '#FFC107'     // Yellow
-};
-
-// Custom SVG icons for different farm types
-const createFarmIcon = (color: string) => {
-  return L.divIcon({
-    className: 'custom-div-icon',
-    html: `
-      <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="20" cy="20" r="20" fill="${color}" fill-opacity="0.2"/>
-        <circle cx="20" cy="20" r="15" fill="${color}" fill-opacity="0.4"/>
-        <circle cx="20" cy="20" r="10" fill="${color}"/>
-        <path d="M20 10L25 15H15L20 10Z" fill="white"/>
-      </svg>
-    `,
-    iconSize: [40, 40],
-    iconAnchor: [20, 40],
-    popupAnchor: [0, -40]
-  });
-};
-
 export default function Map() {
+  const [farmers, setFarmers] = useState<Farmer[]>([]);
   const [isClient, setIsClient] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [form, setForm] = useState({
+    name: "",
+    location: { lat: 0, lng: 0 },
+    products: "",
+    type: "",
+    // ...other fields
+  });
+  const router = useRouter();
 
   useEffect(() => {
-    try {
-      setIsClient(true);
-      // Fix for default marker icons in Leaflet with Next.js
-      delete (L.Icon.Default.prototype as { _getIconUrl?: string })._getIconUrl;
-      L.Icon.Default.mergeOptions({
-        iconRetinaUrl: '/images/marker-icon-2x.png',
-        iconUrl: '/images/marker-icon.png',
-        shadowUrl: '/images/marker-shadow.png',
+    setIsClient(true);
+    // Fix for default marker icons in Leaflet with Next.js
+    delete (L.Icon.Default.prototype as { _getIconUrl?: string })._getIconUrl;
+    L.Icon.Default.mergeOptions({
+      iconRetinaUrl: '/images/marker-icon-2x.png',
+      iconUrl: '/images/marker-icon.png',
+      shadowUrl: '/images/marker-shadow.png',
+    });
+
+    // Fetch farmers from backend
+    fetch("http://localhost:5000/farmers")
+      .then((res) => res.json())
+      .then((data) => {
+        setFarmers(data);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        setError(`Failed to fetch farmers: ${err}`);
+        setIsLoading(false);
       });
-      setIsLoading(false);
-    } catch (error) {
-      setError(`Failed to load map: ${error instanceof Error ? error.message : 'Unknown error'}`);
-      setIsLoading(false);
-    }
   }, []);
+
+  const center = {
+    lat: 37.7749,
+    lng: -122.4194
+  };
+
+  // Icon colors for different farm types
+  const iconColors = {
+    vegetable: '#4CAF50', // Green
+    dairy: '#2196F3',    // Blue
+    meat: '#F44336',     // Red
+    mixed: '#FFC107'     // Yellow
+  };
+
+  // Custom SVG icons for different farm types
+  const createFarmIcon = (color: string) => {
+    return L.divIcon({
+      className: 'custom-div-icon',
+      html: `
+        <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="20" cy="20" r="20" fill="${color}" fill-opacity="0.2"/>
+          <circle cx="20" cy="20" r="15" fill="${color}" fill-opacity="0.4"/>
+          <circle cx="20" cy="20" r="10" fill="${color}"/>
+          <path d="M20 10L25 15H15L20 10Z" fill="white"/>
+        </svg>
+      `,
+      iconSize: [40, 40],
+      iconAnchor: [20, 40],
+      popupAnchor: [0, -40]
+    });
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    // You may want to geocode the address to lat/lng here
+    const res = await fetch("http://localhost:5000/farmers", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        ...form,
+        products: form.products.split(",").map((p) => p.trim()),
+        location: { lat: 37.7749, lng: -122.4194 }, // Replace with actual geocoding if needed
+      }),
+    });
+    const data = await res.json();
+    if (data._id) {
+      router.push(`/farmers/${data._id}`); // Redirect to the new farm page
+    }
+  };
 
   if (!isClient) {
     return (
@@ -151,7 +156,7 @@ export default function Map() {
           />
           {farmers.map((farmer) => (
             <Marker
-              key={farmer.id}
+              key={farmer._id}
               position={[farmer.location.lat, farmer.location.lng]}
               icon={createFarmIcon(iconColors[farmer.type])}
             >
@@ -162,7 +167,7 @@ export default function Map() {
                   <p className="text-sm text-gray-600">Rating: {farmer.rating} ⭐</p>
                   <button 
                     className="mt-2 text-sm text-green-600 hover:text-green-700"
-                    onClick={() => window.location.href = `/farmers/${farmer.id}`}
+                    onClick={() => window.location.href = `/farmers/${farmer._id}`}
                   >
                     View Farm Details →
                   </button>
@@ -193,14 +198,38 @@ export default function Map() {
         </div>
       </div>
 
-      <div className="mt-6 text-center">
+      {/* <div className="mt-6 text-center">
         <p className="text-gray-600">
           Want to become a partner farmer? 
           <a href="/farmers" className="text-green-600 hover:text-green-700 ml-1">
             Contact us here
           </a>
         </p>
-      </div>
+      </div> */}
     </>
   );
-} 
+}
+
+export function FarmerDetail() {
+  const { id } = useParams();
+  const [farmer, setFarmer] = useState<any>(null);
+
+  useEffect(() => {
+    fetch(`http://localhost:5000/farmers/${id}`)
+      .then((res) => res.json())
+      .then(setFarmer);
+  }, [id]);
+
+  if (!farmer) return <div>Loading...</div>;
+
+  return (
+    <div>
+      <h1>{farmer.name}</h1>
+      <img src={farmer.image} alt={farmer.name} />
+      <p>Type: {farmer.type}</p>
+      <p>Products: {farmer.products.join(", ")}</p>
+      <p>Location: {farmer.location.lat}, {farmer.location.lng}</p>
+      {/* Add more details as needed */}
+    </div>
+  );
+}

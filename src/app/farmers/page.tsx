@@ -5,6 +5,8 @@ import Header from "@/components/Header";
 import TypingAnimation from "@/components/TypingAnimation";
 import FarmersMap from "@/components/FarmersMap";
 import Image from "next/image";
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 // Smooth scroll utility
 const smoothScroll = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
@@ -16,6 +18,54 @@ const smoothScroll = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) 
 };
 
 export default function Farmers() {
+  const router = useRouter();
+  const [formData, setFormData] = useState({
+    farmName: "",
+    contactPerson: "",
+    email: "",
+    phone: "",
+    farmLocation: "",
+    farmSize: "",
+    products: "",
+    farmDescription: "",
+    type: "vegetable", // default type
+    rating: 0,
+    image: "/pictures/default-farm.jpg" // default image
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    // Convert location to coordinates (simplified - you might want to use a geocoding service)
+    const location = {
+      lat: 37.7749,
+      lng: -122.4194
+    };
+
+    try {
+      const response = await fetch('http://localhost:5000/farmers', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ...formData,
+          location,
+          products: formData.products.split(',').map(p => p.trim())
+        })
+      });
+
+      const data = await response.json();
+      if (data._id) {
+        router.push(`/farmers/${data._id}`);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Navigation Bar */}
@@ -173,6 +223,7 @@ export default function Farmers() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
               {[
                 {
+                  _id: "507f1f77bcf86cd799439011", // Use actual MongoDB ObjectIds
                   name: "John Smith",
                   farm: "Green Valley Organic Farm",
                   image: "/pictures/John.jpg",
@@ -180,6 +231,7 @@ export default function Farmers() {
                   rating: 5
                 },
                 {
+                  _id: "507f1f77bcf86cd799439012",
                   name: "Sarah Johnson",
                   farm: "Sunny Acres Dairy",
                   image: "/pictures/Sarah.jpg",
@@ -187,6 +239,7 @@ export default function Farmers() {
                   rating: 5
                 },
                 {
+                  _id: "507f1f77bcf86cd799439013",
                   name: "Michael Chen",
                   farm: "Mountain View Produce",
                   image: "/pictures/Micheal.jpg",
@@ -205,7 +258,12 @@ export default function Farmers() {
                       />
                     </div>
                     <div>
-                      <h3 className="font-bold text-gray-800">{testimonial.name}</h3>
+                      <Link 
+                        href={`/farmers/${testimonial._id}`} 
+                        className="font-bold text-gray-800 hover:text-green-600 transition-colors"
+                      >
+                        {testimonial.name}
+                      </Link>
                       <p className="text-sm text-gray-600">{testimonial.farm}</p>
                     </div>
                   </div>
@@ -230,7 +288,7 @@ export default function Farmers() {
           <div className="relative p-6 sm:p-8 md:p-12">
             <h2 className="text-3xl sm:text-4xl font-bold text-center mb-8 sm:mb-16 text-gray-800">Join Our Network</h2>
             <div className="max-w-2xl mx-auto bg-white p-6 sm:p-8 rounded-2xl shadow-lg">
-              <form className="space-y-6 text-gray-800">
+              <form onSubmit={handleSubmit} className="space-y-6 text-gray-800">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
                     <label htmlFor="farmName" className="block text-sm font-medium text-gray-800 mb-1">Farm Name</label>
@@ -239,6 +297,8 @@ export default function Farmers() {
                       name="farmName"
                       type="text" 
                       placeholder="Enter your farm name"
+                      value={formData.farmName}
+                      onChange={handleChange}
                       className="w-full px-4 py-2 border border-gray-600 rounded-lg focus:ring-green-500 focus:border-green-500" 
                     />
                   </div>
@@ -249,6 +309,8 @@ export default function Farmers() {
                       name="contactPerson"
                       type="text" 
                       placeholder="Enter contact person name"
+                      value={formData.contactPerson}
+                      onChange={handleChange}
                       className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-green-500 focus:border-green-500" 
                     />
                   </div>
@@ -259,6 +321,8 @@ export default function Farmers() {
                       name="email"
                       type="email" 
                       placeholder="Enter your email address"
+                      value={formData.email}
+                      onChange={handleChange}
                       className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-green-500 focus:border-green-500" 
                     />
                   </div>
@@ -269,6 +333,8 @@ export default function Farmers() {
                       name="phone"
                       type="tel" 
                       placeholder="Enter your phone number"
+                      value={formData.phone}
+                      onChange={handleChange}
                       className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-green-500 focus:border-green-500" 
                     />
                   </div>
@@ -279,6 +345,8 @@ export default function Farmers() {
                       name="farmLocation"
                       type="text" 
                       placeholder="Enter your farm location"
+                      value={formData.farmLocation}
+                      onChange={handleChange}
                       className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-green-500 focus:border-green-500" 
                     />
                   </div>
@@ -289,6 +357,8 @@ export default function Farmers() {
                       name="farmSize"
                       type="number" 
                       placeholder="Enter farm size in acres"
+                      value={formData.farmSize}
+                      onChange={handleChange}
                       className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-green-500 focus:border-green-500" 
                     />
                   </div>
@@ -300,6 +370,8 @@ export default function Farmers() {
                     name="products"
                     rows={3} 
                     placeholder="List the products you grow (e.g., tomatoes, potatoes, etc.)"
+                    value={formData.products}
+                    onChange={handleChange}
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-green-500 focus:border-green-500"
                   ></textarea>
                 </div>
@@ -310,6 +382,8 @@ export default function Farmers() {
                     name="farmDescription"
                     rows={4} 
                     placeholder="Describe your farming practices, certifications, and any special features"
+                    value={formData.farmDescription}
+                    onChange={handleChange}
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-green-500 focus:border-green-500"
                   ></textarea>
                 </div>
@@ -464,4 +538,4 @@ export default function Farmers() {
       </footer>
     </div>
   );
-} 
+}
