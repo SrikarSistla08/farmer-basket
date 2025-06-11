@@ -3,7 +3,7 @@
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, FormEvent, ChangeEvent } from 'react';
 import Image from 'next/image';
 import { useRouter, useParams } from "next/navigation";
 
@@ -18,18 +18,24 @@ interface Farmer {
   // add other fields as needed
 }
 
+interface FormData {
+  name: string;
+  location: { lat: number; lng: number };
+  products: string;
+  type: string;
+}
+
 // Sample farmer data - in a real app, this would come from your backend
 export default function Map() {
   const [farmers, setFarmers] = useState<Farmer[]>([]);
   const [isClient, setIsClient] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [form, setForm] = useState({
+  const [formData, setFormData] = useState<FormData>({
     name: "",
     location: { lat: 0, lng: 0 },
     products: "",
-    type: "",
-    // ...other fields
+    type: ""
   });
   const router = useRouter();
 
@@ -87,25 +93,29 @@ export default function Map() {
     });
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // You may want to geocode the address to lat/lng here
-    const res = await fetch("http://localhost:5000/farmers", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        ...form,
-        products: form.products.split(",").map((p) => p.trim()),
-        location: { lat: 37.7749, lng: -122.4194 }, // Replace with actual geocoding if needed
-      }),
-    });
-    const data = await res.json();
-    if (data._id) {
-      router.push(`/farmers/${data._id}`); // Redirect to the new farm page
+    try {
+      const response = await fetch('http://localhost:5000/farmers', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData)
+      });
+      const data = await response.json();
+      // Handle successful submission
+      console.log('Farmer added:', data);
+    } catch (error) {
+      console.error('Error adding farmer:', error);
     }
   };
 
