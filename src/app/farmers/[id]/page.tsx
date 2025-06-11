@@ -29,6 +29,9 @@ export default function FarmerDetail() {
   const { id } = useParams();
   const [farmer, setFarmer] = useState<Farmer | null>(null);
   const [loading, setLoading] = useState(true);
+  const [imageError, setImageError] = useState(false);
+
+  const defaultImage = "/pictures/valley.jpg"; // Update this to match your actual default image path
 
   useEffect(() => {
     fetch(`http://localhost:5000/farmers/${id}`)
@@ -54,11 +57,12 @@ export default function FarmerDetail() {
         <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
           <div className="relative h-64 sm:h-80">
             <Image
-              src={farmer.image}
-              alt={farmer.farmName}
+              src={imageError ? defaultImage : farmer?.image || defaultImage}
+              alt={farmer?.farmName || 'Farm Image'}
               fill
               className="object-cover"
               priority
+              onError={() => setImageError(true)}
             />
           </div>
           

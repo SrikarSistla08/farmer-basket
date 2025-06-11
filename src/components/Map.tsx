@@ -7,13 +7,15 @@ import { useEffect, useState, FormEvent, ChangeEvent } from 'react';
 import Image from 'next/image';
 import { useRouter, useParams } from "next/navigation";
 
+type FarmType = 'vegetable' | 'dairy' | 'meat' | 'mixed';
+
 interface Farmer {
   _id: string;
   name: string;
   location: { lat: number; lng: number };
   products: string[];
   rating: number;
-  type: string;
+  type: FarmType;
   image: string;
   // add other fields as needed
 }
@@ -65,13 +67,13 @@ export default function Map() {
   const center = {
     lat: 37.7749,
     lng: -122.4194
-  };
-
   // Icon colors for different farm types
-  const iconColors = {
+  const iconColors: Record<FarmType, string> = {
     vegetable: '#4CAF50', // Green
     dairy: '#2196F3',    // Blue
     meat: '#F44336',     // Red
+    mixed: '#FFC107'     // Yellow
+  };
     mixed: '#FFC107'     // Yellow
   };
 
@@ -166,7 +168,7 @@ export default function Map() {
           />
           {farmers.map((farmer) => (
             <Marker
-              key={farmer._id}
+              icon={createFarmIcon(iconColors[farmer.type as FarmType] ?? '#888')}
               position={[farmer.location.lat, farmer.location.lng]}
               icon={createFarmIcon(iconColors[farmer.type])}
             >
