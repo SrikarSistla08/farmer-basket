@@ -5,7 +5,7 @@ import Header from "@/components/Header";
 import TypingAnimation from "@/components/TypingAnimation";
 import FarmersMap from "@/components/FarmersMap";
 import Image from "next/image";
-import { useState } from 'react';
+import { useState, FormEvent, ChangeEvent } from 'react';
 import { useRouter } from 'next/navigation';
 
 // Smooth scroll utility
@@ -17,9 +17,21 @@ const smoothScroll = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) 
   }
 };
 
+interface FormData {
+  farmName: string;
+  contactPerson: string;
+  email: string;
+  phone: string;
+  farmLocation: string;
+  farmSize: string;
+  products: string;
+  farmDescription: string;
+  type: string;
+}
+
 export default function Farmers() {
   const router = useRouter();
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormData>({
     farmName: "",
     contactPerson: "",
     email: "",
@@ -28,38 +40,31 @@ export default function Farmers() {
     farmSize: "",
     products: "",
     farmDescription: "",
-    type: "vegetable", // default type
-    rating: 0,
-    image: "/pictures/default-farm.jpg" // default image
+    type: "vegetable" // default type
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    
-    // Convert location to coordinates (simplified - you might want to use a geocoding service)
-    const location = {
-      lat: 37.7749,
-      lng: -122.4194
-    };
-
     try {
       const response = await fetch('http://localhost:5000/farmers', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          ...formData,
-          location,
-          products: formData.products.split(',').map(p => p.trim())
-        })
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData)
       });
-
-      const data = await response.json();
-      if (data._id) {
-        router.push(`/farmers/${data._id}`);
+      
+      if (response.ok) {
+        const data = await response.json();
+        window.location.href = `/farmers/${data._id}`;
       }
     } catch (error) {
       console.error('Error:', error);

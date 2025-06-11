@@ -3,12 +3,13 @@
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
-import { useEffect, useState, FormEvent, ChangeEvent } from 'react';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
-import { useRouter, useParams } from "next/navigation";
+import { useParams } from "next/navigation";
 
 type FarmType = 'vegetable' | 'dairy' | 'meat' | 'mixed';
 
+// Update Farmer interface for FarmerDetail
 interface Farmer {
   _id: string;
   name: string;
@@ -17,29 +18,18 @@ interface Farmer {
   rating: number;
   type: FarmType;
   image: string;
-  // add other fields as needed
+  farmDescription?: string;
 }
 
-interface FormData {
-  name: string;
-  location: { lat: number; lng: number };
-  products: string;
-  type: string;
-}
-
-// Sample farmer data - in a real app, this would come from your backend
 export default function Map() {
   const [farmers, setFarmers] = useState<Farmer[]>([]);
   const [isClient, setIsClient] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [formData, setFormData] = useState<FormData>({
-    name: "",
-    location: { lat: 0, lng: 0 },
-    products: "",
-    type: ""
-  });
-  const router = useRouter();
+  const center = {
+    lat: 37.7749,
+    lng: -122.4194
+  };
 
   useEffect(() => {
     setIsClient(true);
@@ -63,11 +53,6 @@ export default function Map() {
         setIsLoading(false);
       });
   }, []);
-
-  const center = {
-    lat: 37.7749,
-    lng: -122.4194
-  };
 
   // Icon colors for different farm types
   const iconColors: Record<FarmType, string> = {
@@ -93,32 +78,6 @@ export default function Map() {
       iconAnchor: [20, 40],
       popupAnchor: [0, -40]
     });
-  };
-
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
-  };
-
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    try {
-      const response = await fetch('http://localhost:5000/farmers', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData)
-      });
-      const data = await response.json();
-      // Handle successful submission
-      console.log('Farmer added:', data);
-    } catch (error) {
-      console.error('Error adding farmer:', error);
-    }
   };
 
   if (!isClient) {
@@ -222,26 +181,40 @@ export default function Map() {
   );
 }
 
+// Update FarmerDetail to use proper types and Next.js Image
 export function FarmerDetail() {
   const { id } = useParams();
-  const [farmer, setFarmer] = useState<any>(null);
+  const [farmer, setFarmer] = useState<Farmer | null>(null);
+  const [imageError, setImageError] = useState(false);
+  
+  // Update default image path to use valley.jpg
+  const defaultImage = "/pictures/valley.jpg";
 
   useEffect(() => {
     fetch(`http://localhost:5000/farmers/${id}`)
       .then((res) => res.json())
-      .then(setFarmer);
+      .then(setFarmer)
+      .catch(console.error);
   }, [id]);
 
   if (!farmer) return <div>Loading...</div>;
 
   return (
     <div>
-      <h1>{farmer.name}</h1>
-      <img src={farmer.image} alt={farmer.name} />
+      <h1>{farmer?.name}</h1>
+      <div className="relative h-64 w-full">
+        <Image
+          src={imageError ? defaultImage : (farmer?.image || defaultImage)}
+          alt={farmer?.name || 'Farm Image'}
+          fill
+          className="object-cover"
+          onError={() => setImageError(true)}
+          priority
+        />
+      </div>
       <p>Type: {farmer.type}</p>
-      <p>Products: {farmer.products.join(", ")}</p>
-      <p>Location: {farmer.location.lat}, {farmer.location.lng}</p>
-      {/* Add more details as needed */}
+  );  <p>Products: {farmer.products.join(", ")}</p>
+}     <p>Location: {farmer.location.lat}, {farmer.location.lng}</p>
     </div>
   );
 }
